@@ -65,6 +65,7 @@ class LinkedList:
         return out_string
 
 # Test case 1
+print("=============Test case 1=============")
 blockchain = LinkedList()
 blockchain.append("First block")
 assert blockchain.head.value.hash == blockchain.head.value.calc_hash()
@@ -81,3 +82,15 @@ print(blockchain)
 while node and node.next != blockchain.tail:
     assert node.value.hash == node.next.value.previous_hash
     node = node.next
+
+## Test Case 2
+print("=============Test case 2=============")
+block = Block('2022-01-01 00:00:00', '', '0')
+assert block.hash == 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+
+
+## Test Case 3
+print("=============Test case 3=============")
+
+block = Block('2022-01-01 00:00:00', 'Transaction data', '0')
+assert block.hash == '9a61299ef2bbfc27cabba3f6dca0311618e9f72721a60dc1e2ba2bc50bfe970a'
