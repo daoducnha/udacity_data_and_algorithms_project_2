@@ -19,18 +19,6 @@ class Group(object):
     def get_name(self):
         return self.name
 
-
-parent = Group("parent")
-child = Group("child")
-sub_child = Group("subchild")
-
-sub_child_user = "sub_child_user"
-sub_child.add_user(sub_child_user)
-
-child.add_group(sub_child)
-parent.add_group(child)
-
-
 def is_user_in_group(user, group):
     """
     Return True if user is in the group, False otherwise.
@@ -46,10 +34,53 @@ def is_user_in_group(user, group):
     child_groups = group.groups
 
     for child_group in child_groups:
-        return is_user_in_group(user, child_group)
-
+        if is_user_in_group(user, child_group):
+            return True
     return False
 
+
+## Test Case 1
+print("=============Test case 1=============")
+
+parent = Group("parent")
+child = Group("child")
+sub_child = Group("subchild")
+
+sub_child_user = "sub_child_user"
+parent.add_group(child)
+child.add_group(sub_child)
+sub_child.add_user(sub_child_user)
+
+assert is_user_in_group(sub_child_user, parent) == True
+
+## Test Case 2
+print("=============Test case 2=============")
+
+parent = Group("parent")
+child = Group("child")
+sub_child = Group("subchild")
+
+sub_child_user = "sub_child_user"
+sub_child.add_user(sub_child_user)
+child.add_group(sub_child)
+parent.add_group(child)
 new_user = "new_user"
-print(is_user_in_group(sub_child_user, parent))
-print(is_user_in_group(new_user, parent))
+
+assert is_user_in_group(new_user, parent) == False
+
+## Test Case 3
+print("=============Test case 3=============")
+parent = Group("parent")
+child = Group("child")
+child2 = Group("child2")
+sub_child = Group("subchild")
+sub_child2 = Group("subchild2")
+sub_child_user2 = "sub_child_user2"
+
+parent.add_group(child)
+parent.add_group(child2)
+child.add_group(sub_child)
+child2.add_group(sub_child2)
+sub_child2.add_user(sub_child_user2)
+
+assert is_user_in_group(sub_child_user2, parent) == True
