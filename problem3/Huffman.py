@@ -2,34 +2,10 @@ import sys
 import heapq
 
 class Node(object):
-    def __init__(self, value = None):
+    def __init__(self, value=None):
         self.value = value
         self.left = None
         self.right = None
-
-    def set_value(self, value):
-        self.value = value
-
-    def get_value(self):
-        return self.value
-
-    def set_left_child(self, node):
-        self.left = node
-
-    def set_right_child(self, node):
-        self.right = node
-
-    def get_left_child(self):
-        return self.left
-
-    def get_right_child(self):
-        return self.right
-
-    def has_left_child(self):
-        return self.left is not None
-
-    def has_right_child(self):
-        return self.right is not None
 
 class Tree(object):
     def __init__(self, node=None):
@@ -37,29 +13,6 @@ class Tree(object):
 
     def get_root(self):
         return self.root
-
-    def insert_root(self, node):
-        if self.root is None:
-            self.root = node
-        elif node.value >= self.root.value:
-            node.left = self.root
-            self.root = node
-        else:
-            node.right = self.root
-            self.root = node
-            return
-    def merge_tree(self, other_tree):
-        new_root = Node(self.root.value + other_tree.root.value)
-        if self.root.value < other_tree.root.value:
-            new_root.left = self.root
-            new_root.right = other_tree.root.value
-        else:
-            new_root.right = self.root
-            new_root.left = other_tree.root.value
-
-        return Tree(new_root)
-
-
 
 class HeapElement:
     def __init__(self, value=None, frequency=0):
@@ -142,6 +95,8 @@ def get_encode_values(tree):
     root = tree.root
 
     def traverse(node, path):
+        if node is None:
+            return
         if type(node) is HeapElement:
             encoded_dict[node.value] = ''.join(path)
             return
@@ -173,7 +128,7 @@ def huffman_decoding(data,tree):
         decoding_string += node.value
     return decoding_string
 
-
+c
 if __name__ == "__main__":
     codes = {}
 
