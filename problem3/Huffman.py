@@ -88,42 +88,48 @@ def huffman_encoding(data):
     for key in char_dict:
         heapq.heappush(heap, HeapElement(key, char_dict.get(key)))
 
-    # tree = Tree()
-    while len(heap) > 1:
-        first_elem = heapq.heappop(heap)
-        second_elem = heapq.heappop(heap)
 
-        if type(first_elem.value) is str and type(second_elem.value) is str:
-            tree_node = Node(first_elem.frequency + second_elem.frequency)
-            tree_node.left = first_elem
-            tree_node.right = second_elem
-            sub_tree = Tree(tree_node)
-            new_heap_elem = HeapElement(sub_tree, tree_node.value)
-            heapq.heappush(heap, new_heap_elem)
-        elif type(first_elem.value) is Tree and type(second_elem.value) is not Tree:
-            tree_node = Node(first_elem.value.root.value + second_elem.frequency)
-            tree_node.left = first_elem.value.root
-            tree_node.right = second_elem
-            sub_tree = Tree(tree_node)
-            new_heap_elem = HeapElement(sub_tree, tree_node.value)
-            heapq.heappush(heap, new_heap_elem)
-        elif type(first_elem.value) is not Tree and type(second_elem.value) is Tree:
-            tree_node = Node(first_elem.frequency + second_elem.value.root.value)
-            tree_node.left = first_elem
-            tree_node.right = second_elem.value.root
-            sub_tree = Tree(tree_node)
-            new_heap_elem = HeapElement(sub_tree, tree_node.value)
-            heapq.heappush(heap, new_heap_elem)
-        else:
-            tree_node = Node(first_elem.value.root.value + second_elem.value.root.value)
-            tree_node.left = first_elem.value.root
-            tree_node.right = second_elem.value.root
-            sub_tree = Tree(tree_node)
-            new_heap_elem = HeapElement(sub_tree, tree_node.value)
-            heapq.heappush(heap, new_heap_elem)
+    if len(heap) == 1:
+        elem = heapq.heappop(heap)
+        tree_node = Node(elem.frequency)
+        tree_node.left = elem
+        tree = Tree(tree_node)
+    else:
+        while len(heap) > 1:
+            first_elem = heapq.heappop(heap)
+            second_elem = heapq.heappop(heap)
 
+            if type(first_elem.value) is str and type(second_elem.value) is str:
+                tree_node = Node(first_elem.frequency + second_elem.frequency)
+                tree_node.left = first_elem
+                tree_node.right = second_elem
+                sub_tree = Tree(tree_node)
+                new_heap_elem = HeapElement(sub_tree, tree_node.value)
+                heapq.heappush(heap, new_heap_elem)
+            elif type(first_elem.value) is Tree and type(second_elem.value) is not Tree:
+                tree_node = Node(first_elem.value.root.value + second_elem.frequency)
+                tree_node.left = first_elem.value.root
+                tree_node.right = second_elem
+                sub_tree = Tree(tree_node)
+                new_heap_elem = HeapElement(sub_tree, tree_node.value)
+                heapq.heappush(heap, new_heap_elem)
+            elif type(first_elem.value) is not Tree and type(second_elem.value) is Tree:
+                tree_node = Node(first_elem.frequency + second_elem.value.root.value)
+                tree_node.left = first_elem
+                tree_node.right = second_elem.value.root
+                sub_tree = Tree(tree_node)
+                new_heap_elem = HeapElement(sub_tree, tree_node.value)
+                heapq.heappush(heap, new_heap_elem)
+            else:
+                tree_node = Node(first_elem.value.root.value + second_elem.value.root.value)
+                tree_node.left = first_elem.value.root
+                tree_node.right = second_elem.value.root
+                sub_tree = Tree(tree_node)
+                new_heap_elem = HeapElement(sub_tree, tree_node.value)
+                heapq.heappush(heap, new_heap_elem)
 
-    tree = heapq.heappop(heap).value
+        tree = heapq.heappop(heap).value
+
     encoded_data = get_encode_values(tree)
     encode_str = ''
     for c in data:
@@ -190,7 +196,19 @@ if __name__ == "__main__":
 ## and two of them must include edge cases, such as null, empty or very large values
 
 ## Test Case 1
+print("=============Test case 1=============")
+string1 = 'aaaabbc'
+encoded_str1, tree = huffman_encoding(string1)
+assert huffman_decoding(encoded_str1, tree) == string1
 
 ## Test Case 2
+print("=============Test case 2=============")
+string2 = 'aaaaaaaaaa'
+encoded_str2, tree = huffman_encoding(string2)
+assert huffman_decoding(encoded_str2, tree) == string2
 
 ## Test Case 3
+print("=============Test case 3=============")
+string3 = 'mississippi'
+encoded_str3, tree = huffman_encoding(string3)
+assert huffman_decoding(encoded_str3, tree) == string3
