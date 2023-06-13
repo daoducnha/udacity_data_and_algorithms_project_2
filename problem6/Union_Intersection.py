@@ -75,7 +75,7 @@ def union(llist_1, llist_2):
 
 
 ## Test case 1
-
+print("=============Test case 1=============")
 linked_list_1 = LinkedList()
 linked_list_2 = LinkedList()
 
@@ -92,7 +92,7 @@ print (union(linked_list_1,linked_list_2))
 print (intersection(linked_list_1,linked_list_2))
 
 ## Test case 2
-
+print("=============Test case 2=============")
 linked_list_3 = LinkedList()
 linked_list_4 = LinkedList()
 
@@ -108,11 +108,10 @@ for i in element_2:
 print (union(linked_list_3,linked_list_4))
 print (intersection(linked_list_3,linked_list_4))
 
-## Add your own test cases: include at least three test cases
-## and two of them must include edge cases, such as null, empty or very large values
-
-## Test Case 1
-
-## Test Case 2
-
 ## Test Case 3
+print("=============Test case 3=============")
+linked_list_1 = LinkedList()
+linked_list_2 = LinkedList()
+
+assert union(linked_list_1, linked_list_2) == []
+
